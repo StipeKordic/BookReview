@@ -16,6 +16,10 @@ public class UserDetails implements org.springframework.security.core.userdetail
         return null;
     }
 
+    public Long getId() {
+        return user.getId();
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();

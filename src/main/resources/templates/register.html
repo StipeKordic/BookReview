@@ -4,54 +4,100 @@
     <meta charset="UTF-8">
     <title>Registrirajte se na sustav</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <style>
+        .bg-image {
+            background-image: url('https://hcommons.org/app/uploads/sites/1001669/2022/10/yin-adapted-2-scaled.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+        }
+        .card {
+            border-radius: 1rem;
+            backdrop-filter: blur(30px);
+        }
+        .form-outline {
+            margin-bottom: 1rem;
+        }
+        .form-control {
+            border-radius: 0.5rem;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+        .btn-link {
+            color: #0d6efd;
+        }
+        .btn-link:hover {
+            color: #0b5ed7;
+        }
+    </style>
 </head>
 <body>
+<section class="text-center">
+    <div class="bg-image"></div>
 
-<div class="container vh-100">
-    <div class="row justify-content-center align-items-center h-100">
-        <div class="col-6Pro">
-            <div class="card shadow p-5">
-                <form th:action="@{/register_user}"
-                      th:object="${user}" method="post">
-                    <div th:if="${success==true}" class="alert alert-success">
-                        Uspješno ste se registrirali prijavite se <a href="/login">ovdje</a>.
-                    </div>
+    <div class="card mx-4 mx-md-5 shadow-5-strong bg-body-tertiary" style="margin-top: -235px;">
+        <div class="card-body py-5 px-md-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-5">Sign up now</h2>
+                    <form th:action="@{/register_user}" th:object="${user}" method="post">
+                        <div th:if="${success==true}" class="alert alert-success">
+                            Registration was successfull. Log in  <a href="/login">here</a>.
+                        </div>
 
-                    <div>
-                        <label class="form-label"></label>
-                        <input class="form-control" th:classappend="${#fields.hasErrors('firstname') ? 'is-invalid' : ''}" type="text" placeholder="Unesite Vaše ime" th:field="*{firstname}" />
-                        <div th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="invalid-feedback"></div> <!-- Ukoliko ima greški vezanih uz ime korisnika prikaži ih.  -->
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <input class="form-control" th:classappend="${#fields.hasErrors('firstname') ? 'is-invalid' : ''}" type="text" placeholder="Insert your name" th:field="*{firstname}" />
+                                    <label class="form-label" for="form3Example1">First name</label>
+                                    <div th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-outline">
+                                    <input class="form-control" th:classappend="${#fields.hasErrors('lastname') ? 'is-invalid' : ''}" type="text" placeholder="Insert your surname" th:field="*{lastname}" />
+                                    <label class="form-label" for="form3Example2">Last name</label>
+                                    <div th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div>
-                        <label class="form-label"></label>
-                        <input class="form-control" th:classappend="${#fields.hasErrors('lastname') ? 'is-invalid' : ''}" type="text" placeholder="Unesite Vaše prezime" th:field="*{lastname}" />
-                        <div th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="invalid-feedback"></div> <!-- Ukoliko ima greški vezanih uz ime korisnika prikaži ih.  -->
-                    </div>
+                        <div class="form-outline mb-4">
+                            <input class="form-control" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" type="email" placeholder="Insert your email adress" th:field="*{email}" />
+                            <label class="form-label" for="form3Example3">Email address</label>
+                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+                        </div>
 
-                    <div>
-                        <label class="form-label"></label>
-                        <input class="form-control" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" type="email" placeholder="Unesite Vašu email adresu" th:field="*{email}" />
-                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div> <!-- Ukoliko ima greški vezanih uz ime korisnika prikaži ih.  -->
-                    </div>
+                        <div class="form-outline mb-4">
+                            <input class="form-control" th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}" type="password" placeholder="Insert your password" th:field="*{password}" />
+                            <label class="form-label" for="form3Example4">Password</label>
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+                        </div>
 
-                    <div>
-                        <label class="form-label"></label>
-                        <input class="form-control" th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}" type="password" placeholder="Unesite Vašu lozinku" th:field="*{password}" />
-                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div> <!-- Ukoliko ima greški vezanih uz ime korisnika prikaži ih.  -->
-                    </div>
+                        <div class="form-outline mb-4">
+                            <input class="form-control" th:classappend="${#fields.hasErrors('passwordRepeat') ? 'is-invalid' : ''}" type="password" placeholder="Repeat your password" th:field="*{passwordRepeat}" />
+                            <label class="form-label" for="form3Example5">Repeat Password</label>
+                            <div th:if="${#fields.hasErrors('passwordRepeat')}" th:errors="*{passwordRepeat}" class="invalid-feedback"></div>
+                        </div>
 
-                    <div>
-                        <label class="form-label"></label>
-                        <input class="form-control" th:classappend="${#fields.hasErrors('passwordRepeat') ? 'is-invalid' : ''}" type="password" placeholder="Ponovite Vašu lozinku" th:field="*{passwordRepeat}" />
-                        <div th:if="${#fields.hasErrors('passwordRepeat')}" th:errors="*{passwordRepeat}" class="invalid-feedback"></div> <!-- Ukoliko ima greški vezanih uz ime korisnika prikaži ih.  -->
-                    </div>
-                    <button type="submit" class="btn mt-5 btn-primary col-12">Registriraj se</button>
-                </form>
+                        <div class="d-flex justify-content-between mb-2">
+                            <a th:href="@{/login}" class="btn btn-link">Already have an account? Log in</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block mb-2">Sign up</button>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</section>
+<!-- Section: Design Block -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-...your-integrity-here..." crossorigin="anonymous"></script>
 </body>
 </html>

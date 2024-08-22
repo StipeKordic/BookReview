@@ -1,12 +1,10 @@
 package bookreviewjava.bookreviewjava.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -14,28 +12,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 2, max = 50, message = "Polje mora sadržavati barem 2 znaka i manje od 50 znakova.") // Anotator za provjeru duljine unesenog teksta.
+    @Size(min = 2, max = 50, message = "First name needs to have between 2 and 50 characters.")
     @Column(nullable = false, length = 50)
     private String firstname;
 
-    @Size(min = 2, max = 50, message = "Polje mora sadržavati barem 2 znaka i manje od 50 znakova.") // Anotator za provjeru duljine unesenog teksta.
+    @Size(min = 2, max = 50, message = "Last name needs to have between 2 and 50 characters.")
     @Column(nullable = false, length = 50)
     private String lastname;
-    @NotBlank(message="Molimo unesite Vašu email adresu.") // polje email mora biti jedinstveno
-    @Email(message = "Unesite ispravnu email adresu.") // polje email mora biti u obliku email adrese
+    @NotBlank(message="Field can not be empty.")
+    @Email(message = "Please provide correct email adress.")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message="Molimo unesite Vašu lozinku.") // polje mora imati vrijednost
+    @NotBlank(message="Field can not be empty.")
     @Column(nullable = false)
     private String password;
 
-    @NotBlank(message="Molimo ponovite Vašu lozinku.") // polje mora imati vrijednost
-    @Transient // polje nije zapisano u bazi no potrebno je radi provjere ponovnog unosa.
+    @NotBlank(message="Please repeat your password.")
+    @Transient
     private String passwordRepeat;
 
 
-    public User(Long id, String firstname, String lastname, String email, String password, String role) {
+    public User(Long id, String firstname, String lastname, String email, String password) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -64,6 +62,9 @@ public class User {
 
     public String getLastname() {
         return lastname;
+    }
+    public String getFullName() {
+        return firstname + " " + lastname;
     }
 
     public void setLastname(String lastname) {

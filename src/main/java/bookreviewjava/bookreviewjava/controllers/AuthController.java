@@ -25,11 +25,6 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/home")
-    public String home() {
-        return "home"; // No need to specify .html
-    }
-
     @GetMapping("/register")
     public String register (Model model) {
         model.addAttribute("user", new User());
@@ -39,21 +34,19 @@ public class AuthController {
 
     @PostMapping("/register_user")
     public String register_user (@Valid User user, BindingResult result, Model model) {
-        // Provjeri je li korisnik postoji u bazi, ako postoji u polje email dodati grešku
         if (userRepo.findByEmail(user.getEmail()) != null) {
-            result.addError(new FieldError("user", "email", "Korisnik je već registriran s ovom email adresom, molimo pokušajte koristiti drugu."));
-        }
-        // Provjeri jesu li lozinke odgovarajuće, ako nisu u polje password repeat i password dodati grešku
-        if (!user.getPassword().equals(user.getPasswordRepeat())) {
-            result.addError(new FieldError("user", "passwordRepeat", "Lozinke se moraju podudarati"));
-            result.addError(new FieldError("user", "password", "Lozinke se moraju podudarati"));
+            result.addError(new FieldError("user", "email", "There is already user registered with this email. Please try another one."));
         }
 
-        // prikaži greške ukoliko postoje
+        if (!user.getPassword().equals(user.getPasswordRepeat())) {
+            result.addError(new FieldError("user", "passwordRepeat", "Passwords are not matching"));
+            result.addError(new FieldError("user", "password", "Passwords are not matching"));
+        }
+
         boolean errors = result.hasErrors();
         if (errors) {
-            model.addAttribute("user", user); // podaci koji su uredu šalju se formi na prikaz
-            model.addAttribute("success", false); // sakrij poruku da je sve ok
+            model.addAttribute("user", user);
+            model.addAttribute("success", false);
             return "register";
         }
 
